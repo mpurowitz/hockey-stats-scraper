@@ -23,6 +23,8 @@
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1000;
         }
 
         .header h1 {
@@ -40,7 +42,6 @@
             margin-bottom: 20px;
             overflow: visible;
             position: relative;
-            z-index: 100;
         }
 
         .control-group {
@@ -49,7 +50,6 @@
             align-items: center;
             overflow: visible;
             position: relative;
-            z-index: 100;
         }
 
         .control-group label {
@@ -121,6 +121,8 @@
             padding: 20px;
             max-width: 100%;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .stats-panel {
@@ -130,6 +132,8 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
             width: 100%;
+            position: relative;
+            z-index: 1;
         }
 
         .filter-buttons {
@@ -842,6 +846,11 @@
         .league-multi-select {
             position: relative;
             width: 100%;
+            z-index: 1;
+        }
+        
+        .league-multi-select.active {
+            z-index: 99999;
         }
         
         .league-selected-display {
@@ -867,13 +876,13 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             margin-top: 5px;
-            z-index: 9999;
+            z-index: 100000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             padding: 8px;
             display: grid;
             grid-template-columns: repeat(3, 200px);
             gap: 4px;
-            max-height: 200px;
+            max-height: 350px;
             overflow-y: auto;
         }
         
@@ -894,6 +903,21 @@
         
         .league-dropdown-menu::-webkit-scrollbar-thumb:hover {
             background: #555;
+        }
+        
+        .league-group-header {
+            grid-column: 1 / -1;
+            font-weight: 600;
+            font-size: 12px;
+            color: #333;
+            padding: 8px 4px 4px 4px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 4px;
+            background: #f5f5f5;
+        }
+        
+        .league-group-header:first-child {
+            padding-top: 4px;
         }
         
         .league-option {
@@ -1037,17 +1061,15 @@
                         <span class="placeholder">Select leagues...</span>
                     </div>
                     <div class="league-dropdown-menu" id="leagueDropdownMenu" style="display: none;">
-                        <label class="league-option">
-                            <input type="checkbox" value="https://www.eliteprospects.com/league/ehl" data-name="EHL" class="league-checkbox">
-                            <span>EHL</span>
-                        </label>
+                        <!-- American Leagues -->
+                        <div class="league-group-header">🇺🇸 American Leagues</div>
                         <label class="league-option">
                             <input type="checkbox" value="https://www.eliteprospects.com/league/ehlp" data-name="EHLP" class="league-checkbox">
                             <span>EHLP</span>
                         </label>
                         <label class="league-option">
-                            <input type="checkbox" value="https://www.eliteprospects.com/league/gojhl" data-name="GOJHL" class="league-checkbox">
-                            <span>GOJHL</span>
+                            <input type="checkbox" value="https://www.eliteprospects.com/league/ehl" data-name="EHL" class="league-checkbox">
+                            <span>EHL</span>
                         </label>
                         <label class="league-option">
                             <input type="checkbox" value="https://www.eliteprospects.com/league/na3hl" data-name="NA3HL" class="league-checkbox">
@@ -1062,10 +1084,6 @@
                             <span>NCDC</span>
                         </label>
                         <label class="league-option">
-                            <input type="checkbox" value="https://www.eliteprospects.com/league/ojhl" data-name="OJHL" class="league-checkbox">
-                            <span>OJHL</span>
-                        </label>
-                        <label class="league-option">
                             <input type="checkbox" value="https://www.eliteprospects.com/league/usphl-elite" data-name="USPHL Elite" class="league-checkbox">
                             <span>USPHL Elite</span>
                         </label>
@@ -1073,10 +1091,34 @@
                             <input type="checkbox" value="https://www.eliteprospects.com/league/usphl-premier" data-name="USPHL Premier" class="league-checkbox">
                             <span>USPHL Premier</span>
                         </label>
+                        
+                        <!-- Canadian Leagues -->
+                        <div class="league-group-header">🇨🇦 Canadian Leagues</div>
+                        <label class="league-option">
+                            <input type="checkbox" value="https://www.eliteprospects.com/league/ojhl" data-name="OJHL" class="league-checkbox">
+                            <span>OJHL</span>
+                        </label>
+                        <label class="league-option">
+                            <input type="checkbox" value="https://www.eliteprospects.com/league/gojhl" data-name="GOJHL" class="league-checkbox">
+                            <span>GOJHL</span>
+                        </label>
+                        <label class="league-option">
+                            <input type="checkbox" value="https://www.eliteprospects.com/league/sjhl" data-name="SJHL" class="league-checkbox">
+                            <span>SJHL</span>
+                        </label>
+                        <label class="league-option">
+                            <input type="checkbox" value="https://www.eliteprospects.com/league/hjhl" data-name="HJHL" class="league-checkbox">
+                            <span>HJHL</span>
+                        </label>
+                        <label class="league-option">
+                            <input type="checkbox" value="https://www.eliteprospects.com/league/kijhl" data-name="KIJHL" class="league-checkbox">
+                            <span>KIJHL</span>
+                        </label>
                     </div>
                     <div class="league-tags" id="leagueTags"></div>
                 </div>
             </div>
+            
             <div class="control-group">
                 <label>Season:</label>
                 <select id="season">
@@ -1159,6 +1201,7 @@
                 <button class="filter-btn" data-filter="05-birth">2005 Born</button>
                 <button class="filter-btn" data-filter="usa-born">USA Born</button>
                 <button class="filter-btn" data-filter="florida-born">FL Born</button>
+                <button id="refreshDataBtn" style="background:#2196F3; margin-left:auto;">🔄 Refresh Data</button>
             </div>
 
             <div class="stats-filters">
@@ -1317,12 +1360,20 @@
         function initLeagueMultiSelect() {
             const display = document.getElementById('leagueSelectedDisplay');
             const menu = document.getElementById('leagueDropdownMenu');
+            const multiSelect = document.querySelector('.league-multi-select');
             const checkboxes = document.querySelectorAll('.league-checkbox');
             
             // Toggle dropdown
             display.addEventListener('click', () => {
                 const isHidden = menu.style.display === 'none';
                 menu.style.display = isHidden ? 'grid' : 'none';  // Changed from 'block' to 'grid'
+                
+                // Toggle active class for z-index
+                if (isHidden) {
+                    multiSelect.classList.add('active');
+                } else {
+                    multiSelect.classList.remove('active');
+                }
                 
                 if (isHidden) {
                     // Debug: Log CSS grid properties
@@ -1348,6 +1399,7 @@
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('.league-multi-select')) {
                     menu.style.display = 'none';
+                    multiSelect.classList.remove('active');
                 }
             });
             
@@ -1423,14 +1475,17 @@
         
         function updateScrapeButton() {
             const btn = document.getElementById('scrapeBtn');
-            if (selectedLeagues.length === 0) {
+            const totalLeagues = selectedLeagues.length;
+            
+            if (totalLeagues === 0) {
                 btn.textContent = '🔍 Scrape Leagues';
                 btn.disabled = true;
-            } else if (selectedLeagues.length === 1) {
-                btn.textContent = `🔍 Scrape ${selectedLeagues[0].name}`;
+            } else if (totalLeagues === 1) {
+                const leagueName = selectedLeagues[0].name;
+                btn.textContent = `🔍 Scrape ${leagueName}`;
                 btn.disabled = false;
             } else {
-                btn.textContent = `🔍 Scrape ${selectedLeagues.length} Leagues`;
+                btn.textContent = `🔍 Scrape ${totalLeagues} Leagues`;
                 btn.disabled = false;
             }
         }
@@ -1496,8 +1551,13 @@
             // Update active states
             document.querySelectorAll('.league-tab').forEach(tab => {
                 tab.classList.remove('active');
+                // Get the tab name from the text content (excluding badge)
+                const tabTextNode = Array.from(tab.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
+                const tabText = tabTextNode ? tabTextNode.textContent.trim() : '';
+                if (tabText === tabName) {
+                    tab.classList.add('active');
+                }
             });
-            event.target.closest('.league-tab').classList.add('active');
             
             // Filter and display players for selected tab
             allPlayers = [];
@@ -1739,6 +1799,21 @@
                 resumeBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     scrapeTeams(true); // true = resume
+                });
+            }
+            
+            // Refresh Data button
+            const refreshDataBtn = document.getElementById('refreshDataBtn');
+            if (refreshDataBtn) {
+                refreshDataBtn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    console.log('🔄 Manual data refresh requested');
+                    refreshDataBtn.disabled = true;
+                    refreshDataBtn.textContent = '🔄 Loading...';
+                    await loadTeamsFromAPI();
+                    refreshDataBtn.disabled = false;
+                    refreshDataBtn.textContent = '🔄 Refresh Data';
+                    console.log('✅ Data refreshed');
                 });
             }
             
@@ -2550,6 +2625,9 @@
             const maxTeamsValue = maxTeamsSelect.value;
             const maxTeams = maxTeamsValue === "" ? null : parseInt(maxTeamsValue);
             
+            // Use selected leagues
+            let allLeaguesToScrape = [...selectedLeagues];
+            
             // Reset data if not resuming
             if (!resume) {
                 allPlayers = [];
@@ -2581,23 +2659,23 @@
             
             // Show scrape order
             console.log('\n' + '='.repeat(60));
-            console.log('📋 SCRAPE ORDER (as you selected them):');
-            selectedLeagues.forEach((league, idx) => {
+            console.log('📋 SCRAPE ORDER:');
+            allLeaguesToScrape.forEach((league, idx) => {
                 console.log(`  ${idx + 1}. ${league.name}`);
             });
             console.log('='.repeat(60) + '\n');
             
             // Create league tabs immediately so user knows what's coming
-            createEarlyLeagueTabs(selectedLeagues);
+            createEarlyLeagueTabs(allLeaguesToScrape);
             
             // Scrape each league sequentially (ORIGINAL WORKING METHOD)
-            for (let i = 0; i < selectedLeagues.length; i++) {
-                const league = selectedLeagues[i];
+            for (let i = 0; i < allLeaguesToScrape.length; i++) {
+                const league = allLeaguesToScrape[i];
                 
                 if (status) {
                     status.style.display = 'block';
                     status.className = 'status loading';
-                    status.textContent = `Scraping ${league.name} (${i+1}/${selectedLeagues.length})...`;
+                    status.textContent = `Scraping ${league.name} (${i+1}/${allLeaguesToScrape.length})...`;
                 }
                 
                 console.log(`\n🏒 Starting league ${i+1}/${selectedLeagues.length}: ${league.name}`);
@@ -2625,6 +2703,12 @@
                     
                     // Wait for this league to complete before starting next
                     await waitForScrapeComplete();
+                    
+                    // Small delay to ensure data is stored
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    // Load data from this league
+                    await loadTeamsFromAPI();
                     
                     console.log(`\n${'='.repeat(60)}`);
                     console.log(`✅ ${league.name} COMPLETE`);
@@ -2691,7 +2775,7 @@
         function loadTeamsFromAPI() {
             debugLog('Loading teams from API');
             
-            fetch('/api/teams')
+            return fetch('/api/teams')
             .then(response => response.json())
             .then(data => {
                 debugLog('Teams loaded from API', data);
@@ -2719,6 +2803,11 @@
                     // Update league tab counts (don't recreate tabs - they were created early)
                     updateLeagueTabCounts();
                     
+                    // Initialize to "All Leagues" tab if not already set
+                    if (!activeLeagueTab && Object.keys(scrapedDataByLeague).length > 0) {
+                        switchLeagueTab('All Leagues');
+                    }
+                    
                 } else if (Array.isArray(data)) {
                     // Old single-league format
                     allPlayers = [];
@@ -2737,9 +2826,12 @@
                 const playerCount = document.getElementById('playerCount');
                 if (playerCount) playerCount.textContent = allPlayers.length;
                 
+                // Force table refresh
                 filterAndDisplayPlayers();
                 
+                // Log for debugging
                 console.log('✅ Teams loaded:', Object.keys(scrapedDataByLeague).length, 'leagues,', allPlayers.length, 'players');
+                console.log('📊 Displaying players in table...');
             })
             .catch(error => {
                 debugLog('Error loading teams from API', error);
@@ -3122,8 +3214,8 @@
                     switch (columnName) {
                         case 'name':
                             const displayName = truncateName(player.name, customWidth);
-                            if (player.profile_url) {
-                                cellValue = `<strong><a href="${player.profile_url}" target="_blank" title="${player.name || ''}" style="color: #007bff; text-decoration: none;">${displayName}</a></strong>`;
+                            if (player.playerUrl) {
+                                cellValue = `<strong><a href="${player.playerUrl}" target="_blank" title="${player.name || ''}" style="color: #007bff; text-decoration: none;">${displayName}</a></strong>`;
                             } else {
                                 cellValue = `<strong title="${player.name || ''}">${displayName}</strong>`;
                             }
@@ -3265,7 +3357,7 @@
                             'PIM': player.pim || 0,
                             'Team': player.team || '',
                             'Season': player.season || '',
-                            'Profile URL': player.profile_url || ''
+                            'Profile URL': player.playerUrl || ''
                         }));
                         
                         const ws = XLSX.utils.json_to_sheet(exportData);
@@ -3313,7 +3405,7 @@
                     'Team': player.team || '',
                     'League': player.league || '',
                     'Season': player.season || '',
-                    'Profile URL': player.profile_url || ''
+                    'Profile URL': player.playerUrl || ''
                 }));
                 
                 const ws = XLSX.utils.json_to_sheet(exportData);
